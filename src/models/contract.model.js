@@ -279,8 +279,8 @@ contractSchema.statics = {
      *
      * @returns {Promise<User[]>}
      */
-    list() {
-        return this.find()
+    list(opt={}) {
+        return this.find(opt)
             .sort('-createdAt')
             .exec();
     }

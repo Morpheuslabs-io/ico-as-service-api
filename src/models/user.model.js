@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         match: /^\S+@\S+\.\S+$/,
         required: true,
-        unique: true,
         trim: true,
         lowercase: true,
     },
@@ -78,7 +77,11 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String
-    }
+    },
+    contractId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Contract',
+    },
 }, {
     timestamps: true,
     usePushEach: true
@@ -178,10 +181,18 @@ userSchema.statics = {
      * @returns {Promise<User, APIError>}
      */
     async findAndGenerateToken(options) {
-        const {email, password, refreshObject} = options;
+        const {email, password, refreshObject, role, contractId} = options;
         if (!email) throw new APIError({message: 'An email is required to generate a token'});
 
-        const user = await this.findOne({email}).exec();
+        const opt = {
+            email,
+            role,
+        };
+        if (role == "Investor") {
+            opt.contractId = contractId;
+        }
+
+        const user = await this.findOne(opt).exec();
         const err = {
             status: httpStatus.UNAUTHORIZED,
             isPublic: true,
@@ -209,10 +220,14 @@ userSchema.statics = {
         throw new APIError(err);
     },
 
-    list() {
-        return this.find({})
+    list(opt = {}) {
+        return this.find(opt)
             .sort({createdAt: -1})
             .exec();
+    },
+
+    checkDuplicateAdminEmail(email) {
+        return this.find({email: email, role: "Admin"}).count().exec();
     },
 
     checkDuplicateEmail(error) {

@@ -12,6 +12,11 @@ const KYCAMLSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    contractId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Contract',
+        required: true
+    },
     pof: {          // proof of funds
         photos: [{
             type: String
@@ -112,8 +117,8 @@ KYCAMLSchema.statics = {
         }
     },
 
-    list() {
-        return this.find()
+    list(opt={}) {
+        return this.find(opt)
             .populate('userId')
             .select('id poi pof onlineVerified adminVerified userId verifier createdAt')
             .sort('-createdAt')

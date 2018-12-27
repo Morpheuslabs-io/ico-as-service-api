@@ -10,6 +10,8 @@ module.exports = {
             country: Joi.string().required().max(128),
             city: Joi.string().required().max(128),
             address: Joi.string().required().max(256),
+            phone: Joi.string().max(256),
+            role: Joi.string().required().max(256),
         },
     },
 

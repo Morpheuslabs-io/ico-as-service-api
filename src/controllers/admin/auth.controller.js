@@ -2,13 +2,13 @@ const httpStatus = require('http-status');
 const nodemailer = require('nodemailer');
 const twoFactor = require('node-2fa');
 const dotenv = require('dotenv');
-const User = require('../models/user.model');
-const RefreshToken = require('../models/refreshToken.model');
-const EmailVerifyToken = require('../models/emailVerifyToken.model');
+const User = require('../../models/user.model');
+const RefreshToken = require('../../models/refreshToken.model');
+const EmailVerifyToken = require('../../models/emailVerifyToken.model');
 const moment = require('moment-timezone');
-const {jwtExpirationInterval} = require('../config/vars');
-const { sendVerifyEmail, sendForgotPasswordEmail } = require('../helpers/mailer');
-const {log} = require('../helpers/logs');
+const {jwtExpirationInterval} = require('../../config/vars');
+const { sendVerifyEmail, sendForgotPasswordEmail } = require('../../helpers/mailer');
+const {log} = require('../../helpers/logs');
 
 dotenv.config({});
 /**
@@ -30,8 +30,12 @@ function generateTokenResponse(user, accessToken) {
  */
 exports.register = async (req, res, next) => {
     try {
-        const user = await (new User(req.body)).save();
+        const duplicated = await User.checkDuplicateAdminEmail(req.body.email);
+        if (duplicated) {
+            throw new Error("Admin email is already existed.");
+        }
 
+        const user = await (new User(req.body)).save();
         const userTransformed = await user.transform();
 
         // send verification email
@@ -43,7 +47,7 @@ exports.register = async (req, res, next) => {
 
         return res.json({user: userTransformed});
     } catch (error) {
-        return next(User.checkDuplicateEmail(error));
+        return res.status(httpStatus.BAD_REQUEST).json({error: error.message});
     }
 };
 
@@ -53,7 +57,11 @@ exports.register = async (req, res, next) => {
  */
 exports.login = async (req, res, next) => {
     try {
-        const {user, accessToken} = await User.findAndGenerateToken({...req.body, role: "Investor"});
+        const {user, accessToken} = await User.findAndGenerateToken({...req.body, role: "Admin"});
+        // if (user.tfaEnabled) {
+        //     return res.json({tfaEnabled: true});
+        // }
+
         const token = generateTokenResponse(user, accessToken);
         const userTransformed = await user.transform();
         return res.json({token, user: userTransformed, tfaEnabled: false});
@@ -72,7 +80,7 @@ exports.login = async (req, res, next) => {
  */
 exports.verify2FAToken = async (req, res, next) => {
     try {
-        const {user, accessToken} = await User.findAndGenerateToken({...req.body, role: "Investor"});
+        const {user, accessToken} = await User.findAndGenerateToken({...req.body, role: "Admin"});
         if (!user.tfaSecret) {
             return res.status(400).json({code: 400, message: '2FA is not enabled'});
         }
@@ -269,7 +277,7 @@ exports.refresh = async (req, res, next) => {
             userEmail: email,
             token: refreshToken,
         });
-        const {user, accessToken} = await User.findAndGenerateToken({email, refreshObject, role: "Investor"});
+        const {user, accessToken} = await User.findAndGenerateToken({email, refreshObject, role: "Admin"});
         const response = generateTokenResponse(user, accessToken);
         return res.json(response);
     } catch (error) {
