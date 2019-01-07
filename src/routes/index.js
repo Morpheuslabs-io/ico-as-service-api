@@ -11,6 +11,8 @@ const authRoutes = require('./auth.route');
 const salesRoutes = require('./sales.route');
 const purchaseRoutes = require('./purchase.route');
 const settingsRoutes = require('./setting.route');
+const contractRoutes = require('./contract.route');
+const kycamlRoutes = require('./kycaml.route');
 
 const router = express.Router();
 
@@ -27,5 +29,7 @@ router.use('/auth', authRoutes);
 router.use('/sales', salesRoutes);
 router.use('/purchase', purchaseRoutes);
 router.use('/settings', settingsRoutes);
+router.use('/contract', contractRoutes);
+router.use('/kyc-aml', kycamlRoutes);
 
 module.exports = router;

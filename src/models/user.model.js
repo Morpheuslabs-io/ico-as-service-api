@@ -82,6 +82,9 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Contract',
     },
+    ethAddress: {
+        type: String
+    }
 }, {
     timestamps: true,
     usePushEach: true

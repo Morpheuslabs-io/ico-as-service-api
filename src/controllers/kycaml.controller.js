@@ -3,6 +3,7 @@ const request = require('request-promise');
 const dotenv = require('dotenv');
 const Contract = require('../models/contract.model');
 const KYCAML = require('../models/kycaml.model');
+const User = require('../models/user.model');
 const multer = require('multer');
 const _ = require('lodash');
 
@@ -25,7 +26,7 @@ exports.createKYCAML = async (req, res, next) => {
         {name: 'photoK3'},
         {name: 'photoA'},
     ]);
-    upload(req, res, err => {
+    upload(req, res, async err => {
         if (err) {
             return res.status(500).json({error: err.message});
         }
@@ -45,8 +46,32 @@ exports.createKYCAML = async (req, res, next) => {
             photoA.push(req.files["photoA"][0].filename);
         }
 
+        let user = await User.findOne({email: req.body.email, role: "Investor"});
+        if (!user) {
+            user = new User({
+                fullName: req.body.fullName,
+                email: req.body.email,
+                password: 'default value',
+                address: req.body.address,
+                city: req.body.city,
+                country: req.body.country,
+                phone: req.body.phone,
+                ethAddress: req.body.ethAddress,
+                role: "Investor",
+                contractId: req.body.contractId,
+            });
+        } else {
+            user.fullName = req.body.fullName;
+            user.address = req.body.address;
+            user.city = req.body.city;
+            user.country = req.body.country;
+            user.phone = req.body.phone;
+            user.ethAddress = req.body.ethAddress;
+            user.contractId = req.body.contractId;
+        }
+        await user.save();
         const data = {
-            userId: req.body.userId,
+            userId: user._id,
             poi: {
                 photos: photoK,
                 doctype: req.body.doctypeK,
@@ -54,7 +79,8 @@ exports.createKYCAML = async (req, res, next) => {
             pof: {
                 photos: photoA,
                 doctype: req.body.doctypeA,
-            }
+            },
+            contractId: req.body.contractId,
         };
         const kycaml = new KYCAML(data);
         kycaml.save().then(savedKYCAML => {

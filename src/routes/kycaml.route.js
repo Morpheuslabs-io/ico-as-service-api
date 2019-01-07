@@ -10,7 +10,7 @@ const router = express.Router();
 
 router
     .route('/')
-    .post(authorize(), controller.createKYCAML);
+    .post(controller.createKYCAML);
 
 router
     .route('/list')
