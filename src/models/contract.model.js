@@ -78,7 +78,7 @@ const contractSchema = new mongoose.Schema({
         lockDate: {
             type: Date,
         },
-        unLockDate: {
+        unlockDate: {
             type: Date,
         },
         rate: {
