@@ -61,7 +61,7 @@ const contractSchema = new mongoose.Schema({
             type: String,
         },
         allowModifying: {
-            type: Boolean,
+            type: String,
         },
         startDate: {
             type: Date,
