@@ -1,39 +1,33 @@
-# REST API for ICO dashboard
+# API Server
 
-Backend micro service for ICO dashboard
+Provides rest APIs for admin- and user boards
 
-## Getting Started
+## Installation 
 
-Clone the repo and make it yours:
+### Dependencies
 
-```bash
-$ git clone https://github.com/Morpheuslabs-io/ico-as-service-api.git
-$ cd ico-as-service-api
-```
+`yarn install`
 
-Install dependencies:
+### MongoDB
 
-```bash
-$ yarn
+**Link:** https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 
-or
+## Configuration
 
-$ npm install
+  - Copy the template file `.env.example` into own file `.env`
 
-```
+  - Example: `PORT=3777`
 
-Set environment variables:
+## System start
 
-```bash
-$ cp .env.example .env
-```
+### Start MongoDB
 
-## Run
+  - cmd: `pm2 start pm2/script_start_mongo.sh`
 
-```bash
-$ yarn start
+  - MongoDB server listens at: `localhost:27017`
 
-or
+### Start server
 
-$ npm start
-```
+  - in background:  `yarn start`
+
+  - Server listens at: `localhost:3777`
