@@ -4,6 +4,7 @@ const express = require('express');
 const adminAuthRoutes = require('./admin/auth.route');
 const adminKycamlRoutes = require('./admin/kycaml.route');
 const adminContractRoutes = require('./admin/contract.route');
+const adminTokenVestingRoutes = require('./admin/tokenvesting.route');
 const adminUserRoutes = require('./admin/user.route');
 
 // Investor Routes
@@ -22,6 +23,7 @@ router.get('/status', (req, res) => res.send('OK'));
 router.use('/admin/auth', adminAuthRoutes);
 router.use('/admin/kyc-aml', adminKycamlRoutes);
 router.use('/admin/contract', adminContractRoutes);
+router.use('/admin/tokenvesting', adminTokenVestingRoutes);
 router.use('/admin/users', adminUserRoutes);
 
 // Investor Dashboard API

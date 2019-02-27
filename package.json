@@ -2,7 +2,7 @@
   "name": "rest-api",
   "version": "1.2.2",
   "description": "REST API for ICO Dashboard",
-  "author": "Brian Zermeno <brian.zermeno@protonmail.com>",
+  "author": "",
   "main": "src/index.js",
   "private": false,
   "license": "MIT",
