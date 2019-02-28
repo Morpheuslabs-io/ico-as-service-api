@@ -45,6 +45,11 @@ const tokenVestingSchema = new mongoose.Schema({
         tokenAddress: {
           type: String
         }
+    }],
+    addrVestingList: [{
+        type: String,
+        required: true,
+        trim: true,
     }]
 }, {
     timestamps: true,
