@@ -60,7 +60,7 @@ const userSchema = new mongoose.Schema({
     ips: [],
     emailVerified: {
         type: Boolean,
-        default: false,
+        default: true,
     },
     passwordResetToken: {
         type: String
