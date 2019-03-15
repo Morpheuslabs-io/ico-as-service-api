@@ -52,6 +52,7 @@ const contractSchema = new mongoose.Schema({
     },
     network: {
         type: String,
+        required: true,
     },
     tiers: [{
         sequence: {

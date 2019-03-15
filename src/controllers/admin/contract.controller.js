@@ -16,8 +16,9 @@ exports.createContract = async (req, res, next) => {
 };
 
 exports.listContracts = async (req, res, next) => {
+    const net = req.params.net;
     const userId = req.user._id;
-    Contract.list({userId: userId}).then(contracts => {
+    Contract.list({userId: userId, network: net}).then(contracts => {
         return res.status(200).json(contracts);
     }).catch(err => {
         return res.status(500).json({error: true, message: err.message});

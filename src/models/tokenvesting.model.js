@@ -16,6 +16,10 @@ const tokenVestingSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
+    network: {
+      type: String,
+      required: true,
+    },
     emailAddress: {
         type: String,
         required: true,

@@ -9,7 +9,7 @@ router
     .post(authorize(), controller.createContract);
 
 router
-    .route('/list')
+    .route('/list/:net')
     .get(authorize(), controller.listContracts);
 
 router

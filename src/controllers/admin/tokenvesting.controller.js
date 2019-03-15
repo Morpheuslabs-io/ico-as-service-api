@@ -18,8 +18,9 @@ exports.createTokenVesting = async (req, res, next) => {
 };
 
 exports.listTokenVestings = async (req, res, next) => {
+    const net = req.params.net;
     const userId = req.user._id;
-    TokenVesting.list({userId: userId}).then(tokenVestings => {
+    TokenVesting.list({userId: userId, network: net}).then(tokenVestings => {
         return res.status(200).json(tokenVestings);
     }).catch(err => {
         return res.status(500).json({error: true, message: err.message});

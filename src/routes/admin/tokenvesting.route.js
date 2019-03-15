@@ -9,7 +9,7 @@ router
     .post(authorize(), controller.createTokenVesting);
 
 router
-    .route('/list')
+    .route('/list/:net')
     .get(authorize(), controller.listTokenVestings);
 
 router
