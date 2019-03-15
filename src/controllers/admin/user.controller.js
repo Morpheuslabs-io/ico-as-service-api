@@ -83,8 +83,9 @@ exports.update = (req, res, next) => {
 };
 
 exports.list = async (req, res, next) => {
+    const net = req.params.net;
     const adminId = req.user._id;
-    Contract.find({userId: adminId}).sort('-createdAt').exec().then(contracts => {
+    Contract.list({userId: adminId, network: net}).then(contracts => {
         const contractId = req.query.contractId ? req.query.contractId : contracts[0]._id;
         User.list({role: "Investor", contractId: contractId}).then(users => {
             return res.status(200).json(users);
