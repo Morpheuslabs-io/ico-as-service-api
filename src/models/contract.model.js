@@ -67,13 +67,7 @@ const contractSchema = new mongoose.Schema({
         startDate: {
             type: Date,
         },
-        startTime: {
-            type: Date,
-        },
         endDate: {
-            type: Date,
-        },
-        endTime: {
             type: Date,
         },
         lockDate: {
