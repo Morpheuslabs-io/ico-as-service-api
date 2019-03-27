@@ -39,7 +39,7 @@ const contractSchema = new mongoose.Schema({
             default: 0,
         },
     },
-    beneficiaryAddress: {
+    ownerAddress: {
         type: String,
         required: true,
         trim: true,
