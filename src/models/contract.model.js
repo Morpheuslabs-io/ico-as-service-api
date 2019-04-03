@@ -103,10 +103,6 @@ const contractSchema = new mongoose.Schema({
             type: String,
             trim: true,
         }],
-        safemath: {
-            type: String,
-            trim: true,
-        },
         pricingStrategy: [{
             type: String,
             trim: true,

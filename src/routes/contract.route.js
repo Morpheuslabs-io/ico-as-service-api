@@ -5,7 +5,7 @@ const router = express.Router();
 const { authorize } = require('../middlewares/auth');
 
 router
-    .route('/list')
+    .route('/list/:net')
     .get(controller.listContracts);
 
 router

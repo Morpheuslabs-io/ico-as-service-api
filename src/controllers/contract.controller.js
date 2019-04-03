@@ -6,7 +6,8 @@ const Contract = require('../models/contract.model');
 dotenv.config();
 
 exports.listContracts = (req, res, next) => {
-    Contract.list().then(contracts => {
+    const net = req.params.net;
+    Contract.list({network: net}).then(contracts => {
         return res.status(200).json(contracts);
     }).catch(err => {
         return res.status(500).json({error: true, message: err.message});
