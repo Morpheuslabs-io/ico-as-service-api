@@ -84,6 +84,10 @@ const userSchema = new mongoose.Schema({
     },
     ethAddress: {
         type: String
+    },
+    whitelisted: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true,
