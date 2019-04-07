@@ -86,8 +86,8 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     whitelisted: {
-        type: Boolean,
-        default: false
+        type: String,
+        default: 'no'
     }
 }, {
     timestamps: true,

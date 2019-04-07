@@ -57,7 +57,7 @@ exports.createKYCAML = async (req, res, next) => {
                 country: req.body.country,
                 phone: req.body.phone,
                 ethAddress: req.body.ethAddress,
-                whitelisted: false,
+                whitelisted: 'no',
                 role: "Investor",
                 contractId: req.body.contractId,
             });
