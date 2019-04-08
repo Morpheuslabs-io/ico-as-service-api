@@ -88,7 +88,11 @@ const userSchema = new mongoose.Schema({
     whitelisted: {
         type: String,
         default: 'no'
-    }
+    },
+    uiconfig: {
+      type: String,
+      default: 'dashboard,ico,token vesting,kyc & aml,investors'
+  }
 }, {
     timestamps: true,
     usePushEach: true
@@ -121,7 +125,7 @@ userSchema.pre('save', async function save(next) {
 userSchema.method({
     async transform() {
         const transformed = {};
-        const fields = ['id', 'fullName', 'email', 'phone', 'address', 'city', 'state', 'country', 'ips', 'createdAt'];
+        const fields = ['id', 'fullName', 'email', 'phone', 'address', 'city', 'state', 'country', 'ips', 'createdAt', 'uiconfig'];
 
         fields.forEach((field) => {
             transformed[field] = this[field];

@@ -26,8 +26,14 @@ Provides rest APIs for admin- and user boards
 
   - MongoDB server listens at: `localhost:27017`
 
-### Start server
+### Start server (production)
 
   - in background:  `yarn start`
+
+  - Server listens at: `localhost:3777`
+
+### Start server (development)
+
+  - in foreground:  `yarn dev`
 
   - Server listens at: `localhost:3777`
