@@ -36,4 +36,8 @@ router
 router.route('/getinfo/:userId')
     .get(authorize(), controller.getInfo);
 
+router
+  .route('/setui/:userId')
+  .post(authorize(), controller.update);
+
 module.exports = router;
