@@ -91,7 +91,7 @@ const userSchema = new mongoose.Schema({
     },
     uiconfig: {
       type: String,
-      default: 'ui setting,dashboard,ico,token vesting,kyc & aml,investors'
+      default: 'ui setting,dashboard,ico,token vesting,kyc & aml,investors, airdrop'
   }
 }, {
     timestamps: true,
